@@ -2,6 +2,19 @@ import React, {Component} from 'react';
 import {Row, Col, Container, Button} from 'reactstrap';
 
 class Pokedex extends Component {
+
+    triggerDelete(pokemon){
+        if(window.confirm("Are you sure you want to delete this pokemon?")){
+
+           this.setState(prevState => ({
+               onClick: [prevState.pokemons.splice(0, pokemon)]
+           }))
+           return ;
+
+        }
+    }
+
+
     render(){
         const {pokemons} = this.props
         console.log(this.props.pokemons.length);
@@ -22,8 +35,10 @@ class Pokedex extends Component {
                    
                     <li><Button 
                     color = 'danger'
-                    onClick = {()=> {
-                       
+                    onClick = {(e)=> {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        this.triggerDelete(pokemons);
                     }}>Free</Button> 
                     </li>
                 </ul>
